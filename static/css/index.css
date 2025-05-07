@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Color claro para el fondo general */
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Punto_Ticket_logo.svg/2560px-Punto_Ticket_logo.svg.png');
+    background-repeat: no-repeat;
+    background-position: center 200px;
+    background-size: 200px;
+    text-align: center;
+  }
+
+  header {
+    background-color: #800080; /* Morado */
+    color: white;
+    padding: 20px;
+  }
+
+  footer {
+    background-color: #800080; /* Morado */
+    color: white;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  main {
+    padding: 100px 20px 120px; /* espacio suficiente para ver la imagen */
+  }
+
+  button {
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff6600;
+    border: none;
+    color: white;
+    border-radius: 8px;
+  }
+
+  button:hover {
+    background-color: #cc5200;
+  }
