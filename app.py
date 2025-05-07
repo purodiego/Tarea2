@@ -11,8 +11,9 @@ def index():
 def agregar_actividad():
     return render_template("formulario.html")
 
-
-
+@app.route("/actividades")
+def actividades():
+    return render_template("actividades.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

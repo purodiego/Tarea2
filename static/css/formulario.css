@@ -1,25 +1,39 @@
+
+
 header {
-    background-color: #800080; /* Morado */
-    color: white;
-    padding: 20px;
-  }
+  background-color: #800080; /* Morado */
+  color: white;
+  padding: 20px;
+}
 
-  footer {
-    background-color: #800080; /* Morado */
-    color: white;
-    padding: 15px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
+footer {
+  background-color: #800080; /* Morado */
+  color: white;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 
-  button {
-    margin: 10px;
-    padding: 15px 30px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #ff6600;
-    border: none;
-    color: white;
-    border-radius: 8px;
-  } 
+main {
+  position: relative;
+  padding: 100px 20px 120px;
+}
+
+button {
+  position: absolute;
+  top:0;
+  left: 0;
+  margin: 10px;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff6600;
+  border: none;
+  color: white;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: #cc5200;
+}

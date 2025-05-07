@@ -1,17 +1,59 @@
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
 
-    th, td {
-      padding: 8px;
-      border: 1px solid #333;
-      text-align: center;
-    }
+header {
+  background-color: #800080; /* Morado */
+  color: white;
+  padding: 20px;
+}
 
-    th {
-      background-color: #f2f2f2;
-    }
-  
+footer {
+  background-color: #800080;
+  color: white;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: row; /* Organiza los elementos en una fila */
+  justify-content: center; /* Centra los botones horizontalmente */
+  align-items: center; /* Centra los botones verticalmente */
+  gap: 20px; /* Espacio entre los botones */
+  padding: 100px 20px 120px;
+  position: relative;
+}
+
+button {
+  position: relative;
+  margin: 10px;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff6600;
+  border: none;
+  color: white;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: #cc5200;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #333;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
