@@ -1,28 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Tarea 2{% endblock %}
 {% block css %}
-<link rel="stylesheet" href="static/css/index.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 {% endblock %}
-
 {% block content %}
 
-<body>  
-    <header>
-        <h1>Bienvenido a PuntoTicket</h1>
-    </header>
-    <main>
-    <a href="/agregar_actividad">
-    <button>Agregar actividad</button>
-    </a>
-    <a href="/actividades">
-        <button>Actividades</button>
-    </a>
-    
-    <button>Estadísticas</button>
-    </main>
+<header>
+    <h1>Bienvenido a PuntoTicket</h1>
+</header>
+<main>
+  <a href="/agregar_actividad"><button>Agregar actividad</button></a>
+  <a href="/actividades"><button>Actividades</button></a>
+  <button>Estadísticas</button>
+</main>
+<footer>
+    &copy; 2025 Punto Ticket
+</footer>
 
-    <footer>
-        &copy; 2025 Punto Ticket
-    </footer>
-</body>
-{%endblock %}
+
+
+{% endblock %}

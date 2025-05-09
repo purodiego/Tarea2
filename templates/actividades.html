@@ -1,22 +1,56 @@
 {% extends 'base.html' %}
-{% block title %}Tarea 2{% endblock %}
+{% block title %}Actividades{% endblock %}
 {% block css %}
-<link rel="stylesheet" href="static/css/actividades.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/actividades.css') }}">
 {% endblock %}
 
 {% block content %}
-<body>  
-    <header>
-        <h1>Actividades</h1>
-    </header>
-    <main>
-    <a href="/">
-    <button>Volver al inicio</button>
-    </a>
-    </main>
+<header>
+  <h1>Actividades Registradas</h1>
+</header>
 
-    <footer>
-        &copy; 2025 Punto Ticket
-    </footer>
-</body>
-{%endblock %}
+<main>
+  <a href="/"><button class="btn-volver">Volver al inicio</button></a>
+
+  {% if actividades %}
+  <table border="1" cellpadding="10">
+    <thead>
+        <tr>
+          <th>Inicio</th>
+          <th>Término</th>
+          <th>Comuna</th>
+          <th>Sector</th>
+          <th>Tema</th>
+          <th>Nombre Organizador</th>
+          <th>Total Fotos</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in actividades %}
+        <tr>
+          <td>{{ a[1] }}</td> 
+          <td>{{ a[2] }}</td> 
+          <td>{{ a[3] }}</td> 
+          <td>{{ a[4] }}</td> 
+          <td>{{ a[5] if a[5] else 'Sin tema' }}</td>
+          <td>{{ a[6] }}</td> 
+          <td>{{ a[7] if a[7] else 0 }}</td>
+          <td>
+            <a href="/actividad/{{ a[0] }}">
+              <button>Ver detalle</button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+  {% else %}
+  <p>No hay actividades registradas.</p>
+  {% endif %}
+</main>
+
+<footer>
+  &copy; 2025 Punto Ticket
+</footer>
+{% endblock %}

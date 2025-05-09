@@ -1,5 +1,48 @@
-.button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    text-align: center;
-  }
+
+
+header {
+  background-color: #800080; /* Morado */
+  color: white;
+  padding: 20px;
+}
+
+footer {
+  background-color: #800080;
+  color: white;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column; /* Organiza los elementos en una fila */
+  justify-content: center; /* Centra los botones horizontalmente */
+  align-items: center; /* Centra los botones verticalmente */
+  gap: 20px; /* Espacio entre los botones */
+  padding: 100px 20px 120px;
+  position: relative;
+}
+
+button {
+  position: relative;
+  margin: 10px;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff6600;
+  border: none;
+  color: white;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: #cc5200;
+}
+
+section {
+  width: 100%;
+  max-width: 800px; /* Limita el ancho de la sección */
+  text-align: left;
+}

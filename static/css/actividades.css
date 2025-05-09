@@ -27,7 +27,6 @@ main {
 
 button {
   position: relative;
-  margin: 10px;
   padding: 15px 30px;
   font-size: 16px;
   cursor: pointer;
@@ -52,8 +51,28 @@ th, td {
   padding: 8px;
   border: 1px solid #333;
   text-align: center;
+  vertical-align: middle;
 }
 
 th {
   background-color: #f2f2f2;
 }
+
+
+.btn-volver {
+  position: absolute; /* Fija el botón en la pantalla */
+  top: 70px; /* Justo debajo del header */
+  left: 10px; /* Espaciado desde el borde izquierdo */
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #ff6600;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+.btn-volver:hover {
+  background-color: #cc5200;
+}
+

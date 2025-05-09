@@ -1,22 +1,120 @@
 {% extends 'base.html' %}
-{% block title %}Tarea 2{% endblock %}
+{% block title %}Agregar Actividad{% endblock %}
+
 {% block css %}
-<link rel="stylesheet" href="static/css/formulario.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/formulario.css') }}">
 {% endblock %}
 
 {% block content %}
-<body>  
-    <header>
-        <h1>Agrega tu actividad</h1>
-    </header>
-    <main>
-    <a href="/">
-    <button>Volver al inicio</button>
-    </a>
-    </main>
+<header>
+    <h1>Agrega tu actividad</h1>
+</header>
 
-    <footer>
-        &copy; 2025 Punto Ticket
-    </footer>
-</body>
-{%endblock %}
+<main>
+
+    
+  <a href="/" ><button  class="btn-volver" >Volver al inicio</button></a>
+
+  <br><br>
+
+
+    {% if errores %}
+    <div class="errores" style="color: red; border: 1px solid red; padding: 10px;">
+        <strong>Se encontraron los siguientes errores:</strong>
+        <ul>
+        {% for error in errores %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+  <form method="POST" action="/agregar_actividad" enctype="multipart/form-data">
+
+    <label for="region_id">Región:</label><br>
+        <select id="region_id" name="region_id" required onchange="filtrarComunas()">
+            <option value="">-- Selecciona una región --</option>
+            {% for region in regiones %}
+                <option value="{{ region[0] }}">{{ region[1] }}</option>
+            {% endfor %}
+        </select><br><br>
+
+    <label for="comuna_id">Comuna:</label><br>
+        <select id="comuna_id" name="comuna_id" required>
+        <option value="">-- Selecciona una comuna --</option>
+        {% for comuna in comunas %}
+            <option value="{{ comuna[0] }}" data-region="{{ comuna[2] }}">{{ comuna[1] }}</option>
+        {% endfor %}
+        </select><br><br>
+
+    <label for="sector">Sector:</label><br>
+    <textarea id="sector" name="sector" required></textarea><br><br>
+
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" name="nombre" required><br><br>
+
+    <label for="correo">Correo de contacto:</label><br>
+    <input type="email" id="correo" name="correo" required><br><br>
+
+    <label for="numero">Número celular:</label><br>
+    <textarea id="numero" name="numero" required></textarea><br><br>
+
+    <label for="contactarpor">¿Cómo quieres ser contactado?</label><br>
+    <select id="contactarpor" name="contactarpor" required>
+        <option value="">-- Selecciona una opción --</option>
+        <option value="whatsapp">WhatsApp</option>
+        <option value="instagram">Instagram</option>
+        <option value="otro">Otro</option>
+    </select><br><br>
+
+    <div id="campo_identificador">
+        <label for="contacto_id">Tu número o usuario de contacto:</label><br>
+        <input type="text" id="contacto_id" name="contacto_id" required><br><br>
+      </div>
+
+    <label for="fecha_inicio">Fecha y hora de inicio:</label><br>
+    <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" required><br><br>
+
+    <label for="fecha_termino">Fecha y hora de término:</label><br>
+    <input type="datetime-local" id="fecha_termino" name="fecha_termino" required><br><br>
+
+
+    <label for="descripcion">Descripción:</label><br>
+    <textarea id="descripcion" name="descripcion" required></textarea><br><br>
+
+    <label for="tema">Tema:</label><br>
+    <select id="tema" name="tema" required onchange="toggleOtroTema()">
+        <option value="">-- Selecciona un tema --</option>
+        <option value="música">Música</option>
+        <option value="deporte">Deporte</option>
+        <option value="ciencias">Ciencias</option>
+        <option value="religión">Religión</option>
+        <option value="política">Política</option>
+        <option value="tecnología">Tecnología</option>
+        <option value="juegos">Juegos</option>
+        <option value="baile">Baile</option>
+        <option value="comida">Comida</option>
+        <option value="otro">Otro</option>
+    </select><br><br>
+
+    <div id="campo_otro_tema" style="display:none;">
+        <label for="otro_tema">Especifica el tema:</label><br>
+        <input type="text" id="otro_tema" name="otro_tema"><br><br>
+    </div>
+
+    <label for="foto">Subir foto (mínimo 1 y máximo 5)</label><br>
+    <input type="file" name="foto" id="foto" accept="image/*" multiple required><br><br>
+
+    <button type="submit" class="btn-enviar">Enviar actividad</button>
+  </form>
+
+  
+</main>
+
+<footer>
+    &copy; 2025 Punto Ticket
+</footer>
+{% endblock %}
+{% block javascript %} 
+<script src="{{ url_for('static', filename='js/formulario.js') }}"></script>
+{% endblock %}
