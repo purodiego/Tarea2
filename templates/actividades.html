@@ -48,6 +48,18 @@
   {% else %}
   <p>No hay actividades registradas.</p>
   {% endif %}
+
+  <nav class="paginacion">
+  {% if pagina > 1 %}
+    <a href="/actividades?pagina={{ pagina - 1 }}"><button>Anterior</button></a>
+  {% endif %}
+  
+  <span>Página {{ pagina }} de {{ total_paginas }}</span>
+  
+  {% if pagina < total_paginas %}
+    <a href="/actividades?pagina={{ pagina + 1 }}"><button>Siguiente</button></a>
+  {% endif %}
+</nav>
 </main>
 
 <footer>

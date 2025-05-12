@@ -22,8 +22,8 @@ def validar_contactarpor(tipo, valor):
 
 def validar_fecha_fin(fecha_inicio, fecha_fin):
     try:
-        inicio = datetime.strptime(fecha_inicio, "%Y-%m-%d")
-        fin = datetime.strptime(fecha_fin, "%Y-%m-%d")
+        inicio = datetime.strptime(fecha_inicio, "%Y-%m-%dT%H:%M")
+        fin = datetime.strptime(fecha_fin, "%Y-%m-%dT%H:%M")
         return fin > inicio
     except ValueError:
         return False

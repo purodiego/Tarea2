@@ -16,14 +16,25 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    ultimas_actividades = get_ultimas_actividades()
+    return render_template("index.html", ultimas_actividades=ultimas_actividades)
 
 
 
 @app.route("/actividades")
 def actividades():
-    actividades = get_actividades()
-    return render_template("actividades.html", actividades=actividades)
+    pagina = int(request.args.get("pagina", 1))
+    por_pagina = 5
+    offset = (pagina - 1) * por_pagina
+
+    actividades = get_actividades_paginadas(offset, por_pagina)
+    total_actividades = get_total_actividades()
+    total_paginas = (total_actividades + por_pagina - 1) // por_pagina  # redondeo
+
+    return render_template("actividades.html",
+                           actividades=actividades,
+                           pagina=pagina,
+                           total_paginas=total_paginas)
 
 
 @app.route("/agregar_actividad", methods=["GET", "POST"])

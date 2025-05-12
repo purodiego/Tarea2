@@ -49,15 +49,19 @@
 
     <label for="sector">Sector:</label><br>
     <textarea id="sector" name="sector" required></textarea><br><br>
+    <div class="error" id="error-sector"></div><br><br>
 
     <label for="nombre">Nombre:</label><br>
     <input type="text" id="nombre" name="nombre" required><br><br>
+    <div class="error" id="error-nombre"></div><br><br>
 
     <label for="correo">Correo de contacto:</label><br>
     <input type="email" id="correo" name="correo" required><br><br>
+    <div class="error" id="error-correo"></div><br><br>
 
     <label for="numero">Número celular:</label><br>
     <textarea id="numero" name="numero" required></textarea><br><br>
+    <div class="error" id="error-numero"></div><br><br>
 
     <label for="contactarpor">¿Cómo quieres ser contactado?</label><br>
     <select id="contactarpor" name="contactarpor" required>
@@ -66,21 +70,26 @@
         <option value="instagram">Instagram</option>
         <option value="otro">Otro</option>
     </select><br><br>
+    
 
     <div id="campo_identificador">
         <label for="contacto_id">Tu número o usuario de contacto:</label><br>
         <input type="text" id="contacto_id" name="contacto_id" required><br><br>
+        <div class="error" id="error-contacto_id"></div><br><br>
       </div>
 
     <label for="fecha_inicio">Fecha y hora de inicio:</label><br>
     <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" required><br><br>
+    
 
     <label for="fecha_termino">Fecha y hora de término:</label><br>
     <input type="datetime-local" id="fecha_termino" name="fecha_termino" required><br><br>
+    <div class="error" id="error-fechas"></div><br><br>
 
 
     <label for="descripcion">Descripción:</label><br>
     <textarea id="descripcion" name="descripcion" required></textarea><br><br>
+    <div class="error" id="error-descripcion"></div><br><br>
 
     <label for="tema">Tema:</label><br>
     <select id="tema" name="tema" required onchange="toggleOtroTema()">
@@ -104,6 +113,7 @@
 
     <label for="foto">Subir foto (mínimo 1 y máximo 5)</label><br>
     <input type="file" name="foto" id="foto" accept="image/*" multiple required><br><br>
+    <div class="error" id="error-foto"></div><br><br>
 
     <button type="submit" class="btn-enviar">Enviar actividad</button>
   </form>

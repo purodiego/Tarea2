@@ -9,9 +9,56 @@
     <h1>Bienvenido a PuntoTicket</h1>
 </header>
 <main>
+  <div class="botones">
   <a href="/agregar_actividad"><button>Agregar actividad</button></a>
   <a href="/actividades"><button>Actividades</button></a>
   <button>Estadísticas</button>
+</div>
+
+<h2>Últimas 5 actividades</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Inicio</th>
+            <th>Término</th>
+            <th>Comuna</th>
+            <th>Sector</th>
+            <th>Tema</th>
+            <th>Foto</th>
+            <th>Detalle</th>
+        </tr>
+    </thead>
+    <th></th>
+    <tbody>
+        {% for a in ultimas_actividades %}
+        <tr>
+            <td>{{ a[1] }}</td> 
+            <td>{{ a[2] }}</td> 
+            <td>{{ a[3] }}</td> 
+            <td>{{ a[4] }}</td> 
+            <td>{{ a[5] }}</td> 
+            <td>
+              {% if a[6] %}
+                <img src="{{ '/' + a[6] }}" alt="foto" width="100">
+              {% else %}
+                Sin foto
+              {% endif %}
+            </td>
+            <td>
+                <a href="/actividad/{{ a[0] }}">
+                    <button>Ver detalle</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
 </main>
 <footer>
     &copy; 2025 Punto Ticket

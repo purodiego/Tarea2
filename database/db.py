@@ -73,7 +73,7 @@ def insertar_foto(ruta_archivo, nombre_archivo, actividad_id):
 
 
 
-def get_actividades():
+def get_actividades_paginadas(offset=0, limit=5):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
@@ -81,18 +81,19 @@ def get_actividades():
             a.id,
             a.dia_hora_inicio,
             a.dia_hora_termino,
-            c.nombre,
+            c.nombre AS comuna,
             a.sector,
             at.tema,
-            a.nombre,
-            COUNT(f.id)
+            a.nombre AS organizador,
+            COUNT(f.id) AS total_fotos
         FROM actividad a
         JOIN comuna c ON a.comuna_id = c.id
         LEFT JOIN actividad_tema at ON at.actividad_id = a.id
         LEFT JOIN foto f ON f.actividad_id = a.id
         GROUP BY a.id, a.dia_hora_inicio, a.dia_hora_termino, c.nombre, a.sector, at.tema, a.nombre
         ORDER BY a.id DESC
-    """)
+        LIMIT %s OFFSET %s
+    """, (limit, offset))
     actividades = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -152,5 +153,35 @@ def get_actividad_por_id(actividad_id):
 
 
 
+def get_ultimas_actividades(limit=5):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT 
+            a.id,
+            a.dia_hora_inicio,
+            a.dia_hora_termino,
+            c.nombre AS comuna,
+            a.sector AS sector,
+            at.tema,
+            f.ruta_archivo       
+        FROM actividad a
+        JOIN comuna c ON a.comuna_id = c.id
+        LEFT JOIN actividad_tema at ON at.actividad_id = a.id
+        LEFT JOIN foto f ON f.actividad_id = a.id
+        ORDER BY a.id DESC
+        LIMIT %s
+    """, (limit,))
+    actividades = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return actividades
 
-
+def get_total_actividades():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM actividad")
+    total = cursor.fetchone()[0]
+    cursor.close()
+    conn.close()
+    return total

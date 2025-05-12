@@ -32,14 +32,18 @@
       <li><strong>Descripción:</strong><br> {{ actividad[10] }}</li>
       <li><strong>Foto:</strong><br>
         {% if actividad[11] %}
-          <img src="{{ '/' + actividad[11] }}" width="300">
+          <img src="{{ '/' + actividad[11] }}" class="miniatura" width="300">
         {% else %}
           No se subió una foto
         {% endif %}
       </li>
-    </ul>
-  </section>
 
+    </ul>
+
+  </section>
+<div id="overlay" onclick="cerrarImagen()">
+  <img id="imagenGrande" src="" alt="Foto ampliada">
+</div>
 
 
 </main>
@@ -51,3 +55,6 @@
 {% endblock %}
 
 
+{% block javascript %} 
+<script src="{{ url_for('static', filename='js/detalle.js') }}"></script>
+{% endblock %}

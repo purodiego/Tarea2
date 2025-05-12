@@ -52,3 +52,9 @@ main {
   background-color: #cc5200;
 }
 
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
