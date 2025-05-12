@@ -31,10 +31,7 @@ def actividades():
     total_actividades = get_total_actividades()
     total_paginas = (total_actividades + por_pagina - 1) // por_pagina  # redondeo
 
-    return render_template("actividades.html",
-                           actividades=actividades,
-                           pagina=pagina,
-                           total_paginas=total_paginas)
+    return render_template("actividades.html", actividades=actividades, pagina=pagina, total_paginas=total_paginas)
 
 
 @app.route("/agregar_actividad", methods=["GET", "POST"])
@@ -42,7 +39,6 @@ def agregar_actividad():
     if request.method == "POST":
         errores = validar_formulario(request.form, request.files)
         if errores:
-            # Vuelve al formulario mostrando los errores
             conn = get_conn()
             cursor = conn.cursor()
             cursor.execute("SELECT id, nombre FROM region")
@@ -53,8 +49,7 @@ def agregar_actividad():
             conn.close()
 
             return render_template("formulario.html", errores=errores, regiones=regiones, comunas=comunas)
-
-        region_id = request.form["region_id"]  
+  
         comuna_id = request.form["comuna_id"]  
         sector = request.form["sector"]
         nombre = request.form["nombre"]
@@ -74,6 +69,8 @@ def agregar_actividad():
         contactarpor = request.form["contactarpor"]
         identificador = request.form.get("contacto_id") 
         insertar_contacto(contactarpor, identificador, actividad_id)
+
+        
 
         
         tema = request.form["tema"]
@@ -99,7 +96,7 @@ def agregar_actividad():
             foto.save(ruta)
             insertar_foto(ruta, filename, actividad_id)
 
-        return redirect("/actividades")
+        return redirect("/")
 
     conn = get_conn()
     cursor = conn.cursor()
@@ -116,13 +113,25 @@ def agregar_actividad():
 
     return render_template("formulario.html", regiones=regiones, comunas=comunas)
 
+def get_fotos_por_actividad(actividad_id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT ruta_archivo FROM foto WHERE actividad_id = %s
+    """, (actividad_id,))
+    fotos = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return fotos
 
 @app.route("/actividad/<int:id>")
 def detalle_actividad(id):
     actividad = get_actividad_por_id(id)
+    fotos = get_fotos_por_actividad(id)
     if not actividad:
         return "Actividad no encontrada", 404
-    return render_template("detalle.html", actividad=actividad)
+    return render_template("detalle.html", actividad=actividad, fotos=fotos)
+
 
 
 

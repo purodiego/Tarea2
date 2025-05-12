@@ -1,7 +1,7 @@
 
 
 header {
-  background-color: #800080; /* Morado */
+  background-color: #800080; 
   color: white;
   padding: 20px;
 }
@@ -17,10 +17,10 @@ footer {
 
 main {
   display: flex;
-  flex-direction: column; /* Organiza los elementos en una fila */
-  justify-content: center; /* Centra los botones horizontalmente */
-  align-items: center; /* Centra los botones verticalmente */
-  gap: 20px; /* Espacio entre los botones */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  gap: 20px; 
   padding: 100px 20px 120px;
   position: relative;
 }
@@ -43,7 +43,7 @@ button:hover {
 
 section {
   width: 100%;
-  max-width: 800px; /* Limita el ancho de la sección */
+  max-width: 800px; 
   text-align: left;
 }
 

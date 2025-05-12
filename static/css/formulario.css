@@ -1,13 +1,13 @@
 
 
 header {
-  background-color: #800080; /* Morado */
+  background-color: #800080; 
   color: white;
   padding: 20px;
 }
 
 footer {
-  background-color: #800080; /* Morado */
+  background-color: #800080;
   color: white;
   padding: 15px;
   position: fixed;
@@ -31,7 +31,7 @@ main {
   border: none;
   color: white;
   border-radius: 5px;
-  z-index: 1000; /* Asegura que el botón esté por encima de otros elementos */
+  z-index: 1000;
 }
 
 .btn-volver:hover {

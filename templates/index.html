@@ -37,10 +37,16 @@
             <td>{{ a[2] }}</td> 
             <td>{{ a[3] }}</td> 
             <td>{{ a[4] }}</td> 
-            <td>{{ a[5] }}</td> 
             <td>
-              {% if a[6] %}
-                <img src="{{ '/' + a[6] }}" alt="foto" width="100">
+            {% if a[5] == 'otro' %}
+              {{ a[6] }}
+            {% else %}
+              {{ a[5] if a[5] else 'Sin tema' }}
+            {% endif %}
+          </td>
+            <td>
+              {% if a[7] %}
+                <img src="{{ '/' + a[7] }}" alt="foto" width="100">
               {% else %}
                 Sin foto
               {% endif %}

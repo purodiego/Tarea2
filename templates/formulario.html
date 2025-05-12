@@ -51,7 +51,7 @@
     <textarea id="sector" name="sector" required></textarea><br><br>
     <div class="error" id="error-sector"></div><br><br>
 
-    <label for="nombre">Nombre:</label><br>
+    <label for="nombre">Nombre organizador:</label><br>
     <input type="text" id="nombre" name="nombre" required><br><br>
     <div class="error" id="error-nombre"></div><br><br>
 
@@ -64,11 +64,14 @@
     <div class="error" id="error-numero"></div><br><br>
 
     <label for="contactarpor">¿Cómo quieres ser contactado?</label><br>
-    <select id="contactarpor" name="contactarpor" required>
-        <option value="">-- Selecciona una opción --</option>
-        <option value="whatsapp">WhatsApp</option>
-        <option value="instagram">Instagram</option>
-        <option value="otro">Otro</option>
+    <select id="contactarpor" name="contactarpor" required onchange="actualizarLabelContacto()">
+    <option value="">-- Selecciona una opción --</option>
+    <option value="whatsapp">WhatsApp</option>
+    <option value="telegram">Telegram</option>
+    <option value="X">X</option>
+    <option value="instagram">Instagram</option>
+    <option value="tiktok">TikTok</option>
+    <option value="otra">Otra</option>
     </select><br><br>
     
 
@@ -111,8 +114,11 @@
         <input type="text" id="otro_tema" name="otro_tema"><br><br>
     </div>
 
-    <label for="foto">Subir foto (mínimo 1 y máximo 5)</label><br>
-    <input type="file" name="foto" id="foto" accept="image/*" multiple required><br><br>
+    <label>Subir foto (mínimo 1 y máximo 5)</label><br>
+    <div id="contenedor-fotos">
+        <input type="file" name="foto" accept="image/*" required>
+    </div>
+    <button type="button" onclick="agregarCampoFoto()">Agregar otra foto</button><br><br>
     <div class="error" id="error-foto"></div><br><br>
 
     <button type="submit" class="btn-enviar">Enviar actividad</button>

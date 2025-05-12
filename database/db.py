@@ -84,13 +84,14 @@ def get_actividades_paginadas(offset=0, limit=5):
             c.nombre AS comuna,
             a.sector,
             at.tema,
+            at.glosa_otro,
             a.nombre AS organizador,
             COUNT(f.id) AS total_fotos
         FROM actividad a
         JOIN comuna c ON a.comuna_id = c.id
         LEFT JOIN actividad_tema at ON at.actividad_id = a.id
         LEFT JOIN foto f ON f.actividad_id = a.id
-        GROUP BY a.id, a.dia_hora_inicio, a.dia_hora_termino, c.nombre, a.sector, at.tema, a.nombre
+        GROUP BY a.id, a.dia_hora_inicio, a.dia_hora_termino, c.nombre, a.sector, at.tema, at.glosa_otro, a.nombre
         ORDER BY a.id DESC
         LIMIT %s OFFSET %s
     """, (limit, offset))
@@ -98,28 +99,6 @@ def get_actividades_paginadas(offset=0, limit=5):
     cursor.close()
     conn.close()
     return actividades
-
-
-
-
-def get_comunas():
-    conn = get_conn()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, nombre, region_id FROM comuna")
-    comunas = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return comunas
-
-def get_regiones():
-    conn = get_conn()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, nombre FROM region")
-    regiones = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return regiones
-
 
 def get_actividad_por_id(actividad_id):
     conn = get_conn()
@@ -135,6 +114,7 @@ def get_actividad_por_id(actividad_id):
 			at.glosa_otro,
 			a.nombre,
 			a.email,
+            cp.nombre AS tipo_contacto,       
 			cp.identificador,
             a.descripcion,
             f.ruta_archivo
@@ -158,19 +138,19 @@ def get_ultimas_actividades(limit=5):
     cursor = conn.cursor()
     cursor.execute("""
         SELECT 
-            a.id,
-            a.dia_hora_inicio,
-            a.dia_hora_termino,
-            c.nombre AS comuna,
-            a.sector AS sector,
-            at.tema,
-            f.ruta_archivo       
-        FROM actividad a
-        JOIN comuna c ON a.comuna_id = c.id
-        LEFT JOIN actividad_tema at ON at.actividad_id = a.id
-        LEFT JOIN foto f ON f.actividad_id = a.id
-        ORDER BY a.id DESC
-        LIMIT %s
+        a.id,
+        a.dia_hora_inicio,
+        a.dia_hora_termino,
+        c.nombre AS comuna,
+        a.sector AS sector,
+        at.tema,
+        at.glosa_otro,
+        (SELECT f.ruta_archivo FROM foto f WHERE f.actividad_id = a.id LIMIT 1) AS ruta_archivo
+    FROM actividad a
+    JOIN comuna c ON a.comuna_id = c.id
+    LEFT JOIN actividad_tema at ON at.actividad_id = a.id
+    ORDER BY a.id DESC
+    LIMIT %s
     """, (limit,))
     actividades = cursor.fetchall()
     cursor.close()

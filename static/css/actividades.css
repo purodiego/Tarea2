@@ -1,7 +1,7 @@
 
 
 header {
-  background-color: #800080; /* Morado */
+  background-color: #800080;
   color: white;
   padding: 20px;
 }
@@ -55,9 +55,9 @@ th {
 
 
 .btn-volver {
-  position: absolute; /* Fija el botón en la pantalla */
-  top: 70px; /* Justo debajo del header */
-  left: 10px; /* Espaciado desde el borde izquierdo */
+  position: absolute;
+  top: 70px; 
+  left: 10px;
   padding: 10px 20px;
   font-size: 14px;
   cursor: pointer;

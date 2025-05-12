@@ -28,13 +28,15 @@
       </li>
       <li><strong>Organizador:</strong> {{ actividad[7] }}</li>
       <li><strong>Email:</strong> {{ actividad[8] }}</li>
-      <li><strong>Contacto:</strong> {{ actividad[9] }}</li>
-      <li><strong>Descripción:</strong><br> {{ actividad[10] }}</li>
-      <li><strong>Foto:</strong><br>
-        {% if actividad[11] %}
-          <img src="{{ '/' + actividad[11] }}" class="miniatura" width="300">
+      <li><strong>Contacto:</strong> {{ actividad[9] }}: {{ actividad[10] }}</li>
+      <li><strong>Descripción:</strong><br> {{ actividad[11] }}</li>
+      <li><strong>Fotos:</strong><br>
+        {% if fotos %}
+          {% for foto in fotos %}
+            <img src="{{ '/' + foto[0] }}" class="miniatura" width="300">
+          {% endfor %}
         {% else %}
-          No se subió una foto
+          No se subieron fotos
         {% endif %}
       </li>
 

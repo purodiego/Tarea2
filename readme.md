@@ -1,0 +1,6 @@
+En esta tarea se desarrollo una nueva interfaz con características diferentes a la tarea 1, pues por simplicidad preferi hacerlo denuevo.
+Lo principal en esta tarea fue desarrollar la aplicacion web mediante flask, usando app.py que permite correr las funciones de db.py dentro de los html, y de esta forma hacer una página web dinamica. Anteriormente se tenían tablas con datos de los eventos en un LocalStorage, pero mediante el uso de mysql y flask se crearon funciones que permitian sacar nombres, ids, fotos, temas, etc, desde la base de datos. Los datos de la base de datos eran envíados desde el formulario creado, y de ahi se extraen para poder incluirlos en la página web dinámica. 
+
+Otra desarrollo importante en la tarea fue hacer las validaciones del backend, bien se sabe que el javascript permite hacer validaciones, pero estas pueden ser facilmente modificables, y es por eso que es importante validar desde el backend en validations.py. 
+
+Mediante jinja2 es más facil usar los templates, pues es tiene un template base con ciertas características que permiten replicar en todos los html, y además el codigo se ve mucho mas limpio. 

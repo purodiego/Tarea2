@@ -1,7 +1,7 @@
 
 
 header {
-  background-color: #800080; /* Morado */
+  background-color: #800080;
   color: white;
   padding: 20px;
 }
@@ -26,7 +26,7 @@ main {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin-bottom: 30px; /* Espacio debajo de los botones */
+  margin-bottom: 30px;
 }
 
 button {
