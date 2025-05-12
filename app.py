@@ -133,6 +133,10 @@ def allowed_file(filename):
 
 
 
+@app.route("/estadistica")
+def estadistica():
+    return render_template("estadistica.html")
+
 
 
 

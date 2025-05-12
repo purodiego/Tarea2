@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Tarea 1{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/estadistica.css') }}">
+{% endblock %}
+{% block content %}
+<header>
+  <h1>Estadísticas de Actividades</h1>
+</header>
+<main>
+    <a href="/"><button>Volver al inicio</button></a>
+</main>
+<footer>
+  &copy; 2025 Punto Ticket
+</footer>
+{% endblock %}
