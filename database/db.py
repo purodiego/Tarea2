@@ -1,5 +1,5 @@
 import pymysql
-
+from datetime import datetime
 
 DB_NAME = "tarea2"
 DB_USERNAME = "root"
@@ -165,3 +165,36 @@ def get_total_actividades():
     cursor.close()
     conn.close()
     return total
+
+
+def insertar_comentario(actividad_id, nombre, texto):
+    conn = get_conn()
+    cursor = conn.cursor()
+    fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    cursor.execute("""
+        INSERT INTO comentario (actividad_id, nombre, texto, fecha)
+        VALUES (%s, %s, %s, %s)
+    """, (actividad_id, nombre, texto, fecha_actual))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+
+def get_comentarios_por_actividad(actividad_id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT nombre, texto
+        FROM comentario
+        WHERE actividad_id = %s
+        ORDER BY id DESC
+    """, (actividad_id,))
+    resultados = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [{"nombre": n, "texto": t} for n, t in resultados]
+
+

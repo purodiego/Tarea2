@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Tarea 1{% endblock %}
+{% block title %}Tarea 3{% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle.css') }}">
 {% endblock %}
@@ -10,8 +10,8 @@
 <main>
 
   <div style="margin-top: 20px;">
-    <a href="/" ><button  >Volver al inicio</button></a>
-    <a href="/actividades" ><button >Volver al listado</button></a>
+    <a href="/" ><button>Volver al inicio</button></a>
+    <a href="/actividades" ><button>Volver al listado</button></a>
   </div>
 
   <section style="margin-top: 30px;">
@@ -39,14 +39,35 @@
           No se subieron fotos
         {% endif %}
       </li>
-
     </ul>
 
-  </section>
-<div id="overlay" onclick="cerrarImagen()">
-  <img id="imagenGrande" src="" alt="Foto ampliada">
-</div>
+    <hr>
 
+    
+    <hr>
+    <h2>Comentarios</h2>
+
+    <form id="form-comentario">
+      <label>Nombre:</label><br>
+      <input type="text" name="nombre" required minlength="3" maxlength="80"><br><br>
+
+      <label>Comentario:</label><br>
+      <textarea name="texto" rows="4" cols="50" required minlength="5"></textarea><br><br>
+
+      <button type="submit"> Agregar comentario</button>
+    </form>
+
+    <div id="errores-comentario" style="color:red; margin-top: 10px;"></div>
+
+    <h3>Listado de comentarios</h3>
+    <ul id="lista-comentarios"></ul>
+
+
+  </section>
+
+  <div id="overlay" onclick="cerrarImagen()">
+    <img id="imagenGrande" src="" alt="Foto ampliada">
+  </div>
 
 </main>
 
@@ -55,8 +76,9 @@
 </footer>
 
 {% endblock %}
-
-
 {% block javascript %} 
+<script>
+  const actividadId = {{ actividad_id|tojson }};
+</script>
 <script src="{{ url_for('static', filename='js/detalle.js') }}"></script>
 {% endblock %}

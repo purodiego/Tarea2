@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 from database.db import *
 import os
 from werkzeug.utils import secure_filename
-from utils.validations import validar_formulario
+from utils.validations import validar_formulario, validar_comentario
 
 
 
@@ -128,9 +128,36 @@ def get_fotos_por_actividad(actividad_id):
 def detalle_actividad(id):
     actividad = get_actividad_por_id(id)
     fotos = get_fotos_por_actividad(id)
+    comentarios = get_comentarios_por_actividad(id)
     if not actividad:
         return "Actividad no encontrada", 404
-    return render_template("detalle.html", actividad=actividad, fotos=fotos)
+    return render_template("detalle.html", actividad=actividad, fotos=fotos, comentarios=comentarios, actividad_id=id)
+
+
+
+@app.route("/api/comentarios/<int:actividad_id>", methods=["GET"])
+def api_get_comentarios(actividad_id):
+    comentarios = get_comentarios_por_actividad(actividad_id)
+    return jsonify(comentarios)
+
+@app.route("/api/comentarios/<int:actividad_id>", methods=["POST"])
+def api_post_comentario(actividad_id):
+    nombre = request.form.get("nombre", "").strip()
+    texto = request.form.get("texto", "").strip()
+
+    errores = {}
+    if not 3 <= len(nombre) <= 80:
+        errores["nombre"] = "El nombre debe tener entre 3 y 80 caracteres."
+    if len(texto) < 5:
+        errores["texto"] = "El comentario debe tener al menos 5 caracteres."
+
+    if errores:
+        return jsonify({"errores": errores}), 400
+
+    insertar_comentario(actividad_id, nombre, texto)
+    return jsonify({"mensaje": "Comentario agregado exitosamente"})
+
+
 
 
 
@@ -146,7 +173,77 @@ def allowed_file(filename):
 def estadistica():
     return render_template("estadistica.html")
 
+@app.route("/api/estadistica/actividades_por_dia")
+def api_actividades_por_dia():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT DATE(dia_hora_inicio) as fecha, COUNT(*) as cantidad
+        FROM actividad
+        GROUP BY DATE(dia_hora_inicio)
+        ORDER BY fecha
+    """)
+    resultados = cursor.fetchall()
+    cursor.close()
+    conn.close()
 
+    data = [{"fecha": row[0].strftime("%Y-%m-%d"), "cantidad": row[1]} for row in resultados]
+    return jsonify(data)
+
+
+@app.route("/api/estadistica/actividades_por_tema")
+def api_actividades_por_tema():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT tema, COUNT(*) as cantidad
+        FROM actividad_tema
+        GROUP BY tema
+        ORDER BY cantidad DESC
+    """)
+    resultados = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    data = [{"tema": row[0], "cantidad": row[1]} for row in resultados]
+    return jsonify(data)
+
+@app.route("/api/estadistica/actividades_por_franja")
+def api_actividades_por_franja():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT
+            DATE_FORMAT(dia_hora_inicio, '%Y-%m') AS mes,
+            HOUR(dia_hora_inicio) AS hora
+        FROM actividad
+    """)
+    filas = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    datos = {}
+
+    for mes, hora in filas:
+        if mes not in datos:
+            datos[mes] = {"mañana": 0, "mediodia": 0, "tarde": 0}
+        if hora < 12:
+            datos[mes]["mañana"] += 1
+        elif 12 <= hora < 18:
+            datos[mes]["mediodia"] += 1
+        else:
+            datos[mes]["tarde"] += 1
+
+    resultado = []
+    for mes in sorted(datos.keys()):
+        resultado.append({
+            "mes": mes,
+            "mañana": datos[mes]["mañana"],
+            "mediodia": datos[mes]["mediodia"],
+            "tarde": datos[mes]["tarde"]
+        })
+
+    return jsonify(resultado)
 
 
 

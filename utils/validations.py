@@ -75,3 +75,25 @@ def validar_formulario(form, files):
         errores.append("Debes subir entre 1 y 5 imágenes válidas")
 
     return errores
+
+
+def validar_nombre_comentario(value):
+    return value and len(value.strip()) > 2 and len(value.strip()) <= 80
+
+def validar_info_comentario(value):
+    return value and len(value.strip()) >= 5
+
+
+def validar_comentario(form):
+    errores = []
+
+    nombre = form.get("nombre", "").strip()
+    texto = form.get("texto", "").strip()
+
+    if not validar_nombre_comentario(nombre):
+        errores["nombre"] = "El nombre debe tener entre 3 y 80 caracteres."
+
+    if not validar_info_comentario(texto):
+        errores["texto"] = "El comentario debe tener al menos 5 caracteres."
+
+    return errores
