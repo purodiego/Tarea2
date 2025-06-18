@@ -198,3 +198,40 @@ def get_comentarios_por_actividad(actividad_id):
     return [{"nombre": n, "texto": t} for n, t in resultados]
 
 
+def insertar_nota(actividad_id, nota):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO nota (actividad_id, nota)
+        VALUES (%s, %s)
+    """, (actividad_id, nota))
+    conn.commit()
+    
+    cursor.execute("""
+        SELECT ROUND(AVG(nota), 1) FROM nota WHERE actividad_id = %s
+    """, (actividad_id,))
+    promedio = cursor.fetchone()[0]
+    
+    cursor.close()
+    conn.close()
+    return promedio
+
+def get_actividades_realizadas():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT 
+            a.id,
+            a.dia_hora_inicio,
+            a.sector,
+            a.nombre,
+            (SELECT tema FROM actividad_tema WHERE actividad_id = a.id LIMIT 1) AS tema,
+            (SELECT ROUND(AVG(nota), 1) FROM nota WHERE actividad_id = a.id) AS promedio
+        FROM actividad a
+        WHERE a.dia_hora_termino < NOW()
+        ORDER BY a.dia_hora_termino DESC
+    """)
+    actividades = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return actividades

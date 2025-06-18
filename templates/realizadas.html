@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Actividades Realizadas{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/actividades.css') }}">
+
+{% endblock %}
+{% block content %}
+
+<header>
+  <h1>Actividades realizadas</h1>
+</header>
+
+<a href="/"><button>Volver al inicio</button></a>
+<table border="1" cellpadding="10">
+  <thead>
+    <tr>
+      <th>Inicio</th><th>Sector</th><th>Nombre</th><th>Tema</th><th>Nota</th><th>Evaluar</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in actividades %}
+    <tr>
+      <td>{{ a[1] }}</td>
+      <td>{{ a[2] }}</td>
+      <td>{{ a[3] }}</td>
+      <td>{{ a[4] }}</td>
+      <td id="nota-{{ a[0] }}">{{ a[5] if a[5] != None else '-' }}</td>
+      <td>
+        <select onchange="enviarNota({{ a[0] }}, this)">
+          <option value="">--</option>
+          {% for i in range(1, 8) %}
+            <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<footer>
+  &copy; 2025 Punto Ticket
+</footer>
+
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/realizadas.js') }}"></script>
+{% endblock %}
+

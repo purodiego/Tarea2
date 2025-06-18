@@ -246,6 +246,26 @@ def api_actividades_por_franja():
     return jsonify(resultado)
 
 
+@app.route("/actividades_realizadas")
+def actividades_realizadas():
+    actividades = get_actividades_realizadas()
+    return render_template("realizadas.html", actividades=actividades)
+
+
+
+
+@app.route("/api/evaluar/<int:actividad_id>", methods=["POST"])
+def api_evaluar_actividad(actividad_id):
+    data = request.get_json()
+    nota = data.get("nota")
+
+    if not isinstance(nota, int) or not (1 <= nota <= 7):
+        return jsonify({"error": "Nota inválida"}), 400
+
+    promedio = insertar_nota(actividad_id, nota)
+    return jsonify({"mensaje": "Nota registrada", "promedio": promedio})
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
